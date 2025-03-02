@@ -69,7 +69,7 @@ jobs:
         shell: bash
 
       # 既存のリソースファイルがあればコピー（オプション）
-      # ワーキングディレクトリ内での移動
+      # ワーキングディレクトリ内でのコピー
       - name: Copy existing resources if available
         run: |
           if [ -d "resource" ]; then
