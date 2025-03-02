@@ -60,6 +60,9 @@ jobs:
         run: |
           mkdir -p src-tauri/resource
           mkdir -p src-tauri/results
+          mkdir -p src-tauri/results/output
+          mkdur -p src-tauri/results/output/video
+          mkdur -p src-tauri/results/output/voice
           touch src-tauri/resource/.gitkeep
           touch src-tauri/results/.gitkeep
         shell: bash
