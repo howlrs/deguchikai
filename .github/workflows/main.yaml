@@ -55,6 +55,15 @@ jobs:
         # If you don't have `beforeBuildCommand` configured you may want to build your frontend here too.
         run: yarn install # change this to npm or pnpm depending on which one you use.
 
+      # リソースディレクトリをコピーするステップを追加
+      - name: Copy resources to bundle directory
+        run: |
+          mkdir -p src-tauri/resource
+          cp -r src-tauri/resource/* src-tauri/resource/ || true
+          mkdir -p src-tauri/results
+          cp -r src-tauri/results/* src-tauri/results/ || true
+        shell: bash
+
       - uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
