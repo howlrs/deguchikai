@@ -39,7 +39,8 @@
     ],
     "resources": [
       "results/**/*",
-      "resource/**/*"
+      "resource/**/*",
+      ".env"
     ]
   }
 }

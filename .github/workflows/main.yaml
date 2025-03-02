@@ -61,13 +61,15 @@ jobs:
           mkdir -p src-tauri/resource
           mkdir -p src-tauri/results
           mkdir -p src-tauri/results/output
-          mkdur -p src-tauri/results/output/video
-          mkdur -p src-tauri/results/output/voice
+          mkdir -p src-tauri/results/output/video
+          mkdir -p src-tauri/results/output/voice
           touch src-tauri/resource/.gitkeep
-          touch src-tauri/results/.gitkeep
+          touch src-tauri/results/output/video/.gitkeep
+          touch src-tauri/results/output/voice/.gitkeep
         shell: bash
 
       # 既存のリソースファイルがあればコピー（オプション）
+      # ワーキングディレクトリ内での移動
       - name: Copy existing resources if available
         run: |
           if [ -d "resource" ]; then
