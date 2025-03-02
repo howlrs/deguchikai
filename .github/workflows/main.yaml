@@ -58,10 +58,10 @@ jobs:
       # リソースディレクトリをコピーするステップを追加
       - name: Copy resources to bundle directory
         run: |
-          mkdir -p src-tauri/resource
-          cp -r src-tauri/resource/* src-tauri/resource/ || true
-          mkdir -p src-tauri/results
-          cp -r src-tauri/results/* src-tauri/results/ || true
+          mkdir -p resource
+          cp -r src-tauri/resource/* resource/ || true
+          mkdir -p results
+          cp -r src-tauri/results/* results/ || true
         shell: bash
 
       - uses: tauri-apps/tauri-action@v0
