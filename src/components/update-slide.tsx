@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { RowsComponent, RowValue } from "./update-rows";
 import { Image, Button, Col, Input, message, Row, Space } from "antd";
 import { v4 as uuidv4 } from "uuid";
@@ -87,15 +87,47 @@ export const SlideComponent = ({ slides, onUpdate }: UpdateProps) => {
         });
     };
 
+    // 既存のステート定義...
+    const [imageUrls, setImageUrls] = useState<Record<string, string>>({});
+
+    // slideが変更されたときにURLを一度だけ変換
+    useEffect(() => {
+        const updateImageUrls = async () => {
+            const newImageUrls: Record<string, string> = {};
+
+            for (const slide of state) {
+                if (slide.filename && slide.filename !== defaultFilename) {
+                    try {
+                        const url = convertFileSrc(slide.filename);
+                        newImageUrls[slide.key] = url;
+                        console.log(`Converted ${slide.filename} to ${url}`);
+                    } catch (e) {
+                        console.error(`Failed to convert ${slide.filename}:`, e);
+                        newImageUrls[slide.key] = slide.filename;
+                    }
+                }
+            }
+
+            setImageUrls(newImageUrls);
+        };
+
+        updateImageUrls();
+    }, [state]);
+
+    // CreateImageComponentをメモ化
+    const CreateImageComponent = useMemo(() => (key: string, filename: string) => {
+        const imageUrl = imageUrls[key] || filename;
+        return <Row><Col span={24}><Image src={imageUrl} alt="thumbnail" width={'480px'} height={'100%'} /></Col></Row>;
+    }, [imageUrls]);
+
     return (
         <>
             {
                 state.map((slide, index) => (
                     <Space key={slide.key} direction="vertical">
                         {
-                            // ファイルが有るのであればサムネイルを表示
-                            (slide.filename.length > 0 && slide.filename !== defaultFilename) && <Image src={`${convertFileSrc(slide.filename)}`} alt="thumbnail" width={'480px'} height={'100%'} />
-
+                            (slide.filename.length > 0 && slide.filename !== defaultFilename) &&
+                            CreateImageComponent(slide.key, slide.filename)
                         }
                         <Row>
                             <Col span={23}>
