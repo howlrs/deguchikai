@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FloatButton } from "antd";
 import { invoke } from "@tauri-apps/api/core";
 import "./App.css";
-import { SlideComponent, SlideValue } from "./components/update-slide";
+import { defaultFilename, SlideComponent, SlideValue } from "./components/update-slide";
 import { v4 as uuidv4 } from "uuid";
 
 import { FileOutlined, PlayCircleTwoTone } from "@ant-design/icons";
@@ -39,7 +39,7 @@ const App = () => {
   const [result, setResult] = useState("");
   const [slides, setSlides] = useState<SlideValue[]>([{
     key: uuidv4(),
-    filename: 'target file',
+    filename: defaultFilename,
     rows: [
       { key: uuidv4(), voiceId: 0, content: 'content' }
     ]

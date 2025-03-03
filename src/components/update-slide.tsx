@@ -4,6 +4,7 @@ import { Image, Button, Col, Input, message, Row, Space } from "antd";
 import { v4 as uuidv4 } from "uuid";
 import { convertFileSrc } from '@tauri-apps/api/core'; // Tauri v2では core からインポート
 
+export const defaultFilename = 'target filename(absolute path)';
 
 interface UpdateProps {
     slides: SlideValue[];
@@ -93,7 +94,7 @@ export const SlideComponent = ({ slides, onUpdate }: UpdateProps) => {
                     <Space key={slide.key} direction="vertical">
                         {
                             // ファイルが有るのであればサムネイルを表示
-                            slide.filename.length > 0 && <Image src={`${convertFileSrc(slide.filename)}`} alt="thumbnail" width={'480px'} height={'100%'} />
+                            (slide.filename.length > 0 && slide.filename !== defaultFilename) && <Image src={`${convertFileSrc(slide.filename)}`} alt="thumbnail" width={'480px'} height={'100%'} />
 
                         }
                         <Row>
