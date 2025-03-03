@@ -4,6 +4,9 @@ use log::info;
 
 use crate::slide::{utils, video_option::Op, voice};
 
+#[cfg(target_os = "windows")]
+use std::os::windows::process::CommandExt;
+
 pub fn create_args(
     key: String,
     input_filepath: String,
@@ -76,10 +79,14 @@ pub fn create_args(
 // 生成した動画ファイルを返す
 pub async fn create_part(args: Vec<String>) -> Result<(), String> {
     // ffmpegで動画を連結する
-    let output = std::process::Command::new("ffmpeg")
-        .args(args)
-        .output()
-        .map_err(|e| e.to_string())?;
+    let mut cmd = std::process::Command::new("ffmpeg");
+
+    #[cfg(target_os = "windows")]
+    {
+        cmd.creation_flags(0x08000000);
+    }
+
+    let output = cmd.args(args).output().map_err(|e| e.to_string())?;
 
     // error handling
     if output.status.success() {
@@ -125,10 +132,14 @@ pub async fn concat(concat_file: String, output_file: String) -> Result<String, 
             output_file.as_str(),
         ];
         // ffmpegで動画を連結する
-        std::process::Command::new("ffmpeg")
-            .args(args)
-            .output()
-            .map_err(|e| e.to_string())?
+        let mut cmd = std::process::Command::new("ffmpeg");
+
+        #[cfg(target_os = "windows")]
+        {
+            cmd.creation_flags(0x08000000);
+        }
+
+        cmd.args(args).output().map_err(|e| e.to_string())?
     };
 
     info!("result concat video: {:?}", result);
