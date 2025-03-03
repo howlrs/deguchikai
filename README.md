@@ -4,7 +4,8 @@
 
 このドキュメントは、DEGUCHIKAIプロジェクト（`tauri-with-voice`リポジトリ）を理解し、活用し、貢献するための包括的なガイドです。Tauri、React、TypeScriptを用いて開発されたこのプロジェクトは、画像とテキストから音声を合成し、動画を生成するデスクトップアプリケーションです。
 
-![紹介動画](https://www.youtube.com/watch?v=snHeEjaGpMA)
+[紹介動画](https://www.youtube.com/watch?v=snHeEjaGpMA)
+[![紹介動画](https://product.howlrs.net/_next/static/media/deguchikai.690eff3b.png)](https://www.youtube.com/watch?v=snHeEjaGpMA)
 
 **想定読者:**
 
